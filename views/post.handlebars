@@ -1,0 +1,63 @@
+<article>
+  <header>
+    <h1>{{title}}</h1>
+    <p>By {{user.username}} on {{format_date created_at}}</p>
+  </header>
+  <div>
+    {{content}}
+  </div>
+</article>
+
+{{#if logged_in}}
+  <div>
+    <!-- Add Edit and Delete buttons for the owner of the post -->
+    <button type="button" button class="delete-post-btn" data-id="{{id}}">Delete Post</button>
+  </div>
+{{/if}}
+
+<section>
+  <h2>Comments</h2>
+  {{#if comments.length}}
+    {{#each comments}}
+      <div class="comment">
+        <p>{{comment_text}}</p>
+        <p>By {{user.username}} on {{format_date created_at}}</p>
+      </div>
+    {{/each}}
+  {{else}}
+    <p>No comments yet.</p>
+  {{/if}}
+
+  {{#if logged_in}}
+    <form action="/api/comments" method="POST">
+      <textarea name="comment_text" required></textarea>
+      <input type="hidden" name="post_id" value="{{id}}">
+      <button type="submit">Add Comment</button>
+    </form>
+  {{else}}
+    <p><a href="/login">Log in</a> to add a comment.</p>
+  {{/if}}
+</section>
+
+<!-- JavaScript for deleting the post fixing delete button issue-->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const deleteButtons = document.querySelectorAll('.delete-post-btn');
+
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', async (event) => {
+        const id = event.target.getAttribute('data-id');
+
+        const response = await fetch(`/api/posts/${id}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          document.location.replace('/dashboard');
+        } else {
+          alert('Failed to delete post');
+        }
+      });
+    });
+  });
+</script>

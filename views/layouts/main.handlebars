@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tech Blog</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                {{#if logged_in}}
+                    <li><a href="/logout" id="logout">Logout</a></li>
+                {{else}}
+                    <li><a href="/login">Login</a></li>
+                {{/if}}
+            </ul>
+        </nav>
+        <h1>The Tech Blog</h1>
+    </header>
+
+    <main>
+        {{{ body }}} <!-- Content from login.handlebars or signup.handlebars will be injected here -->
+    </main>
+
+    {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+    {{/if}}
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<h1>Your Dashboard</h1>
+
+{{#if posts.length}}
+  {{#each posts}}
+    <div class="post">
+      <h2>{{this.title}}</h2>
+      <p>{{format_date this.created_at}}</p>
+      <p>{{this.content}}</p>
+      <a href="/dashboard/edit/{{this.id}}" class="btn">Edit</a>
+      <form action="/api/posts/{{this.id}}" method="POST">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+  {{/each}}
+{{else}}
+  <p>You have not created any posts yet.</p>
+{{/if}}
+
+<a href="/dashboard/new" class="btn">Create a New Post</a>
