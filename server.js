@@ -1,3 +1,8 @@
+require("dotenv").config();
+
+console.log("DB_USER:", process.env.DB_USER); // Debugging line
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD); // Debugging line
+
 const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
